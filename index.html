@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
   <title>Hell No!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <meta property="og:image" content="/maverick.png"/>
   <style type="text/css">
     body {
       -webkit-font-smoothing: antialiased;  
@@ -16,9 +21,31 @@
       font-size: 3em;
       position: relative;
       height: 100%;
+      margin: 0px;
     }
     html {
       height: 100%;
+    }
+    .button-holder {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate3d(-50%, -50%, 0);
+      -moz-transform: translate3d(-50%, -50%, 0);
+      -ms-transform: translate3d(-50%, -50%, 0);
+      -o-transform: translate3d(-50%, -50%, 0);
+      transform: translate3d(-50%, -50%, 0);
+      /*overflow: hidden;*/
+    }
+    .maverick {
+      z-index: 1;
+      position: absolute;
+      height: 75px;
+      /*-webkit-transition: .5s a ease;
+      -moz-transition: .5s margin ease;
+      -ms-transition: .5s margin ease;
+      -o-transition: .5s margin ease;
+      transition: .5s margin ease;*/
     }
     .hell-no {
       background: #382313;
@@ -28,21 +55,10 @@
       display: block;
       color: #F7EDBF;
       padding: 10px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
       max-width: 100%;
       white-space: nowrap;
-      -webkit-transform: translate3d(-50%, -50%, 0);
-      -moz-transform: translate3d(-50%, -50%, 0);
-      -ms-transform: translate3d(-50%, -50%, 0);
-      -o-transform: translate3d(-50%, -50%, 0);
-      transform: translate3d(-50%, -50%, 0);
-      -webkit-transition: .5s all ease;
-      -moz-transition: .5s all ease;
-      -ms-transition: .5s all ease;
-      -o-transition: .5s all ease;
-      transition: .5s all ease;
+      z-index: 10;
+      position: relative;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
@@ -50,6 +66,15 @@
       user-select: none;
       box-shadow: inset 4px 8px 0px -6px rgba(247, 237, 191, .3);
     }
+
+    .hell-no, .maverick {
+      -webkit-transition: .5s all ease;
+      -moz-transition: .5s all ease;
+      -ms-transition: .5s all ease;
+      -o-transition: .5s all ease;
+      transition: .5s all ease;
+    }
+
     .hell-no:active, .hell-no:focus {
       box-shadow: inset 4px 8px 10px -6px rgba(247, 237, 191, .3);
       background-color: #2E221F;
@@ -75,6 +100,7 @@
 <body>
   <main>
     <section class="button-holder">
+      <img class="maverick" src="http://localhost:1337/maverick.png">
       <a class="hell-no">Hell No!</a>
     </section>
     <footer class="contact-me">
@@ -86,6 +112,45 @@
   </main>
   <script type="text/javascript">
     var audio = new Audio('/hellno2.m4a');  
+    var positions = [
+      {
+        "top": "-43px",
+        "left": "-35px",
+        "rotate": "-45deg"
+      },
+      {
+        "top": "-75px",
+        "left": "10px",
+        "rotate": "0deg"
+      },
+      {
+        "top": "75px",
+        "left": "40px",
+        "rotate": "181deg"
+      },
+      {
+        "top": "-75px",
+        "left": "50%",
+        "rotate": "0deg"
+      },
+      {
+        "top": "-45px",
+        "left": "85%",
+        "rotate": "45deg"
+      },
+      {
+        "top": "0px",
+        "left": "-65px",
+        "rotate": "-90deg"
+      },
+      {
+        "top": "0px",
+        "left": "100%",
+        "rotate": "90deg"
+      }
+
+    ];
+    var reset;
     window.addEventListener("load", function() {
       console.log("Window Loaded")
       var hellNo = document.querySelector(".hell-no")
@@ -96,6 +161,29 @@
     });
 
     function playAudio(audio) {
+      var button   = document.querySelector(".hell-no");
+      var mav      = document.querySelector(".maverick");
+      var num      = Math.floor( Math.random() * positions.length )
+      var position = positions[num]
+      if (!mav.hasAttribute("style")) {
+          mav.setAttribute("style", 
+            "margin-top: "               + position.top    + ";"  +
+            "margin-left: "              + position.left   + ";"  +
+            "-webkit-transform: rotate(" + position.rotate + ");" +
+            "-moz-transform: rotate("    + position.rotate + ");" +
+            "-ms-transform: rotate("     + position.rotate + ");" +
+            "-o-transform: rotate("      + position.rotate + ");" +
+            "transform: rotate("         + position.rotate + ");" 
+          );
+        clearTimeout(reset);
+        reset = setTimeout(function(){
+          mav.setAttribute("style", "potato");
+          setTimeout(function() {
+            mav.removeAttribute("style");
+
+          }, 500);
+        }, 1000);
+      }
       audio.pause();
       console.log(audio.readyState)
       if (audio.readyState > 0) {

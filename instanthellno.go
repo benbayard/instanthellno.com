@@ -28,6 +28,14 @@ func handleRoot(w http.ResponseWriter, req *http.Request) {
     http.ServeFile(w, req, "hellno2.m4a")
     w.Header().Set("Content-Type", "audio/mp4")
     return
+  } else if req.URL.Path == "/maverick.png" {
+    http.ServeFile(w, req, "maverick.png")
+    w.Header().Set("Content-Type", "image/png")
+    return
+  } else if req.URL.Path == "/favicon.ico" {
+    http.ServeFile(w, req, "favicon.ico")
+    w.Header().Set("Content-Type", "image/x-icon")
+    return
   } else {
     http.Error(w, "Not found", 404)
     return
