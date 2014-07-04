@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hell No!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <style type="text/css">
+    body {
+      -webkit-font-smoothing: antialiased;  
+      -moz-font-smoothing: antialiased;  
+      -ms-font-smoothing: antialiased;  
+      -o-font-smoothing: antialiased;  
+      font-smoothing: antialiased;  
+      font-family: 'Rokkitt', sans-serif;
+      background-color: #F1EED9;
+      color: #2E221F;
+      font-size: 3em;
+      position: relative;
+      height: 100%;
+    }
+    html {
+      height: 100%;
+    }
+    .hell-no {
+      background: #382313;
+      border: 3px solid #2E221F;
+      border-radius: 3px;
+      text-align: center;
+      display: block;
+      color: #F7EDBF;
+      padding: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      max-width: 100%;
+      white-space: nowrap;
+      -webkit-transform: translate3d(-50%, -50%, 0);
+      -moz-transform: translate3d(-50%, -50%, 0);
+      -ms-transform: translate3d(-50%, -50%, 0);
+      -o-transform: translate3d(-50%, -50%, 0);
+      transform: translate3d(-50%, -50%, 0);
+      -webkit-transition: .5s all ease;
+      -moz-transition: .5s all ease;
+      -ms-transition: .5s all ease;
+      -o-transition: .5s all ease;
+      transition: .5s all ease;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+      box-shadow: inset 4px 8px 0px -6px rgba(247, 237, 191, .3);
+    }
+    .hell-no:active, .hell-no:focus {
+      box-shadow: inset 4px 8px 10px -6px rgba(247, 237, 191, .3);
+      background-color: #2E221F;
+    }
+  </style>
+  <link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <main>
+    <section class="button-holder">
+      <a class="hell-no">Hell No!</a>
+    </section>
+  </main>
+  <script type="text/javascript">
+    var audio = new Audio('/hellno2.m4a');  
+    window.addEventListener("load", function() {
+      console.log("Window Loaded")
+      var hellNo = document.querySelector(".hell-no")
+      hellNo.addEventListener("click", function() {
+        console.log("clicking the thing?");
+        playAudio(audio);
+      });
+      // var scrolling = false;
+      // hellNo.addEventListener("touchstart", function() {
+      //   console.log("touched the thing?");
+      //   scrolling = false;
+      // });
+      // window.addEventListener("touchmove", function() {
+      //   scrolling = true;
+      // });
+      // hellNo.addEventListener("touchend", function() {
+      //   if(scrolling !== true) {
+      //     playAudio(audio);
+      //   }
+      // })
+    });
+
+    function playAudio(audio) {
+      audio.pause();
+      console.log(audio.readyState)
+      if (audio.readyState > 0) {
+        audio.currentTime = 0;
+      }
+      audio.play();
+    }
+  </script>
+</body>
+</html>
