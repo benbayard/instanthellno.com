@@ -3,11 +3,15 @@ package main
 import(
   "net/http"
   "log"
+  "flag"
 )
 
+var port = flag.String("port", "1337", "http service address")
+
 func main() {
+  flag.Parse()
   http.HandleFunc("/", handleRoot)
-  err := http.ListenAndServe(":1337", nil)
+  err := http.ListenAndServe(":" + *port, nil)
   log.Println(err.Error())
 }
 
@@ -26,5 +30,6 @@ func handleRoot(w http.ResponseWriter, req *http.Request) {
     return
   } else {
     http.Error(w, "Not found", 404)
+    return
   }
 }
